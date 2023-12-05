@@ -16,6 +16,10 @@ export class App extends Component {
     totalPages: 0,
   };
 
+  /**
+   *Methods
+   */
+
   handleSubmit = newQuery => {
     this.setState({
       dateQuery: `${Date.now()}/${newQuery}`,
@@ -25,8 +29,18 @@ export class App extends Component {
       totalPages: 0,
     });
   };
+
+  handleLoadMore = () => {
+    this.setState(prevState => ({
+      currentPage:
+        prevState.currentPage < this.state.totalPages
+          ? prevState.currentPage + 1
+          : prevState.currentPage,
+    }));
+  };
+
   /**
-   * first
+   * Update
    */
 
   async componentDidUpdate(prevProps, prevState) {
@@ -59,19 +73,7 @@ export class App extends Component {
     }
   }
 
-  /**
-   * second
-   */
-
-  handleLoadMore = () => {
-    this.setState(prevState => ({
-      currentPage:
-        prevState.currentPage < this.state.totalPages
-          ? prevState.currentPage + 1
-          : prevState.currentPage,
-    }));
-  };
-
+ 
   render() {
     const { isLoading, images } = this.state;
     return (
