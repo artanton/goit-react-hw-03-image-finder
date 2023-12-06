@@ -11,7 +11,7 @@ export const fetchImages = async (dateQuery, currentPage, perPage) => {
     orientation: 'horizontal',
     safesearch: 'true',
     page: currentPage,
-    per_page: perPage,
+    per_page: 12,
   });
 
   const response = await axios.get(`${BASE_URL}?${params}`);

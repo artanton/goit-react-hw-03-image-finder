@@ -14,7 +14,8 @@ export const QueryForm = ({ onSubmit }) => {
       initialValues={{ query: '' }}
       validationSchema={querySchema}
       onSubmit={(values, { resetForm }) => {
-        onSubmit(values.query);
+        const trimmedQuery = values.query.trim();
+        onSubmit(trimmedQuery);
         resetForm();
       }}
     >

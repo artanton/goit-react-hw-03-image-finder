@@ -21,10 +21,13 @@ export class App extends Component {
    */
 
   handleSubmit = newQuery => {
+    if (newQuery === '') {
+      return;
+    }
     this.setState({
       dateQuery: `${Date.now()}/${newQuery}`,
       currentPage: 1,
-      perPage: 12,
+
       images: [],
       totalPages: 0,
     });
@@ -44,7 +47,7 @@ export class App extends Component {
    */
 
   async componentDidUpdate(prevProps, prevState) {
-    const { dateQuery, currentPage, perPage } = this.state;
+    const { dateQuery, currentPage } = this.state;
     if (
       prevState.dateQuery !== dateQuery ||
       prevState.currentPage !== currentPage
@@ -52,16 +55,10 @@ export class App extends Component {
       this.setState({ isLoading: true });
 
       try {
-        const fetchedImages = await fetchImages(
-          dateQuery,
-          currentPage,
-          perPage
-        );
+        const fetchedImages = await fetchImages(dateQuery, currentPage);
         this.setState(prevState => ({
           images: [...prevState.images, ...fetchedImages.hits],
-          totalPages: Math.ceil(
-            Number(fetchedImages.totalHits) / Number(perPage)
-          ),
+          totalPages: Math.ceil(Number(fetchedImages.totalHits) / Number(12)),
         }));
       } catch (error) {
         alert('Error fetching images:', error);
@@ -73,7 +70,6 @@ export class App extends Component {
     }
   }
 
- 
   render() {
     const { isLoading, images } = this.state;
     return (
