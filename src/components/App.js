@@ -71,7 +71,7 @@ export class App extends Component {
   }
 
   render() {
-    const { isLoading, images } = this.state;
+    const { isLoading, images, currentPage, totalPages } = this.state;
     return (
       <Wrapper>
         <header>
@@ -98,7 +98,7 @@ export class App extends Component {
         </div>
 
         <LoadWrap>
-          {images.length > 0 && (
+          {images.length > 0 && currentPage < totalPages && (
             <Load onClick={this.handleLoadMore}>Load more</Load>
           )}
         </LoadWrap>
